@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaña de Ciberseguridad | GSS Facility Services</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1E3A5F;
+      --navy-dark: #142942;
+      --red: #B22234;
+      --red-light: #D4384B;
+      --green: #8B9A46;
+      --green-light: #A3B35A;
+      --blue: #2B5EA7;
+      --blue-light: #3A75C4;
+      --gray-50: #F8F9FA;
+      --gray-100: #F1F3F5;
+      --gray-200: #E9ECEF;
+      --gray-300: #DEE2E6;
+      --gray-600: #6C757D;
+      --gray-800: #343A40;
+      --white: #FFFFFF;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--gray-800);
+      line-height: 1.7;
+      background: var(--white);
+    }
+
+    /* ===== Navigation ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray-200);
+      transition: box-shadow 0.3s;
+    }
+
+    .navbar.scrolled { box-shadow: var(--shadow-md); }
+
+    .navbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .navbar-logo { height: 44px; }
+
+    .nav-links { display: flex; gap: 8px; list-style: none; }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--navy);
+      background: var(--gray-100);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      margin: 6px 0;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 50%, var(--blue) 100%);
+      color: var(--white);
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 50%, rgba(43,94,167,0.15) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 50%, rgba(178,34,52,0.08) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(2%, -2%) rotate(1deg); }
+      66% { transform: translate(-1%, 1%) rotate(-1deg); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; display: flex; flex-direction: column; align-items: center; }
+
+    .hero-logo { height: 100px; margin-bottom: 32px; filter: brightness(0) invert(1); }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      opacity: 0.9;
+      font-style: italic;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 48px;
+    }
+
+    .scroll-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 32px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50px;
+      transition: all 0.3s;
+    }
+
+    .scroll-cta:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.7);
+      transform: translateY(-2px);
+    }
+
+    .scroll-arrow {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    /* ===== Sections ===== */
+    section { padding: 64px 24px; }
+
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding: 6px 16px;
+      border-radius: 50px;
+    }
+
+    .label-navy { color: var(--navy); background: rgba(30,58,95,0.08); }
+    .label-red { color: var(--red); background: rgba(178,34,52,0.08); }
+    .label-green { color: var(--green); background: rgba(139,154,70,0.08); }
+    .label-blue { color: var(--blue); background: rgba(43,94,167,0.08); }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      max-width: 680px;
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    .alt-bg { background: var(--gray-50); }
+
+    /* ===== Context Section ===== */
+    .context-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .context-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: all 0.3s;
+    }
+
+    .alt-bg .context-card { border-color: var(--gray-300); }
+
+    .context-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .context-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .icon-navy { background: rgba(30,58,95,0.1); }
+    .icon-red { background: rgba(178,34,52,0.1); }
+    .icon-green { background: rgba(139,154,70,0.1); }
+    .icon-blue { background: rgba(43,94,167,0.1); }
+
+    .context-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .context-card p {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    /* ===== Risk Table ===== */
+    .risk-table-wrapper {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .risk-table { width: 100%; border-collapse: collapse; }
+
+    .risk-table thead {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .risk-table th {
+      padding: 16px 24px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: left;
+    }
+
+    .risk-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: 0.95rem;
+    }
+
+    .risk-table tbody tr:last-child td { border-bottom: none; }
+
+    .risk-table tbody tr {
+      transition: background 0.2s;
+    }
+
+    .risk-table tbody tr:hover { background: var(--gray-50); }
+
+    .risk-icon { margin-right: 10px; font-size: 1.1rem; }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge-alta { background: rgba(178,34,52,0.1); color: var(--red); }
+    .badge-media { background: rgba(255,165,0,0.12); color: #C67600; }
+    .badge-alto { background: rgba(178,34,52,0.08); color: var(--red); }
+
+    /* ===== Pillars ===== */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .pillar-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid var(--gray-200);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .pillar-card:nth-child(1)::before { background: var(--navy); }
+    .pillar-card:nth-child(2)::before { background: var(--blue); }
+    .pillar-card:nth-child(3)::before { background: var(--green); }
+    .pillar-card:nth-child(4)::before { background: var(--red); }
+
+    .pillar-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pillar-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: var(--white);
+    }
+
+    .pillar-card:nth-child(1) .pillar-number { background: var(--navy); }
+    .pillar-card:nth-child(2) .pillar-number { background: var(--blue); }
+    .pillar-card:nth-child(3) .pillar-number { background: var(--green); }
+    .pillar-card:nth-child(4) .pillar-number { background: var(--red); }
+
+    .pillar-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .pillar-card p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ===== Practices ===== */
+    .practices-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .practice-group {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+
+    .practice-header {
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .practice-header-navy { background: var(--navy); }
+    .practice-header-blue { background: var(--blue); }
+
+    .practice-header-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .practice-list { padding: 24px 28px; list-style: none; }
+
+    .practice-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .practice-item:last-child { border-bottom: none; }
+
+    .practice-bullet {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-top: 2px;
+    }
+
+    .bullet-navy { background: rgba(30,58,95,0.08); }
+    .bullet-blue { background: rgba(43,94,167,0.08); }
+
+    .practice-item strong {
+      color: var(--navy);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+    .practice-item p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ===== Password Policy ===== */
+    .password-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .password-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+      padding: 28px 24px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .password-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .password-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .password-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .password-card p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    /* ===== Incident Protocol ===== */
+    .incident-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 700px;
+    }
+
+    .incident-step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+      padding: 28px;
+      transition: all 0.3s;
+    }
+
+    .incident-step:hover {
+      transform: translateX(8px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--red);
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-content h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    .footer-logo { height: 36px; filter: brightness(0) invert(1); margin-bottom: 16px; }
+
+    .footer p {
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    .footer strong { color: var(--white); }
+
+    /* ===== Scroll Animations ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Mobile Menu ===== */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--gray-200);
+        box-shadow: var(--shadow-md);
+      }
+
+      .nav-links.open { display: flex; }
+
+      .hamburger { display: block; }
+
+      .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1024px) {
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+      .password-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 48px 20px; }
+
+      .context-grid,
+      .practices-columns { grid-template-columns: 1fr; }
+
+      .pillars-grid { grid-template-columns: 1fr; }
+
+      .password-grid { grid-template-columns: 1fr 1fr; }
+
+      .risk-table-wrapper { overflow-x: auto; }
+
+      .risk-table th, .risk-table td { padding: 12px 16px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+      .password-grid { grid-template-columns: 1fr; }
+      .hero { padding: 100px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <img src="logo.png" alt="GSS Facility Services" class="navbar-logo">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#contexto">Contexto</a></li>
+        <li><a href="#riesgos">Riesgos</a></li>
+        <li><a href="#pilares">Pilares</a></li>
+        <li><a href="#practicas">Buenas Prácticas</a></li>
+        <li><a href="#contrasenas">Contraseñas</a></li>
+        <li><a href="#incidentes">Incidentes</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <img src="logo.png" alt="GSS Facility Services" class="hero-logo">
+      <div class="hero-badge">
+        <span>&#128737;</span> GSS Management Hub
+      </div>
+      <h1>Campaña de Ciberseguridad</h1>
+      <p class="subtitle">&laquo; Nuestra seguridad la construimos todos &raquo;</p>
+      <a href="#contexto" class="scroll-cta">
+        Conoce la campaña
+        <span class="scroll-arrow">&#8595;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== Contexto ===== -->
+  <section id="contexto">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label label-navy">01 &mdash; Contexto</span>
+        <h2 class="section-title">Contexto y Alcance</h2>
+        <p class="section-desc">
+          GSS Management Hub gestiona datos sensibles de personal, clientes e incidentes.
+          Proteger esta información es <strong>vital y obligatorio</strong> para todos los niveles de la organización.
+        </p>
+      </div>
+      <div class="context-grid reveal">
+        <div class="context-card">
+          <div class="context-icon icon-navy">&#128100;</div>
+          <h3>Datos de Personal</h3>
+          <p>Información confidencial de empleados, supervisores y operarios que debe mantenerse segura en todo momento.</p>
+        </div>
+        <div class="context-card">
+          <div class="context-icon icon-blue">&#127970;</div>
+          <h3>Datos de Clientes</h3>
+          <p>Información comercial y contractual de nuestros clientes que confiaron en GSS para su resguardo.</p>
+        </div>
+        <div class="context-card">
+          <div class="context-icon icon-red">&#128196;</div>
+          <h3>Registro de Incidentes</h3>
+          <p>Bitácoras y reportes operativos que contienen detalles sensibles sobre las operaciones diarias.</p>
+        </div>
+        <div class="context-card">
+          <div class="context-icon icon-green">&#128274;</div>
+          <h3>Responsabilidad Compartida</h3>
+          <p>La seguridad no es solo responsabilidad de IT. Cada miembro del equipo tiene un rol clave en la protección.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Riesgos ===== -->
+  <section id="riesgos" class="alt-bg">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label label-red">02 &mdash; Riesgos</span>
+        <h2 class="section-title">Diagnóstico de Riesgos</h2>
+        <p class="section-desc">
+          Estos son los principales riesgos identificados que debemos evitar para proteger nuestra plataforma y la información que gestionamos.
+        </p>
+      </div>
+      <div class="risk-table-wrapper reveal">
+        <table class="risk-table">
+          <thead>
+            <tr>
+              <th>Riesgo</th>
+              <th>Probabilidad</th>
+              <th>Impacto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="risk-icon">&#128273;</span>Contraseñas débiles o compartidas</td>
+              <td><span class="badge badge-alta">Alta</span></td>
+              <td><span class="badge badge-alto">Alto</span></td>
+            </tr>
+            <tr>
+              <td><span class="risk-icon">&#128225;</span>Acceso desde Wi-Fi público sin VPN</td>
+              <td><span class="badge badge-alta">Alta</span></td>
+              <td><span class="badge badge-alto">Alto</span></td>
+            </tr>
+            <tr>
+              <td><span class="risk-icon">&#127907;</span>Phishing (suplantación de identidad)</td>
+              <td><span class="badge badge-media">Media</span></td>
+              <td><span class="badge badge-alto">Alto</span></td>
+            </tr>
+            <tr>
+              <td><span class="risk-icon">&#128187;</span>Sesiones abiertas en equipos compartidos</td>
+              <td><span class="badge badge-media">Media</span></td>
+              <td><span class="badge badge-alto">Alto</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pilares ===== -->
+  <section id="pilares">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label label-green">03 &mdash; Pilares</span>
+        <h2 class="section-title">Pilares de la Campaña</h2>
+        <p class="section-desc">
+          Nuestra estrategia de ciberseguridad se fundamenta en cuatro pilares esenciales que guían todas las acciones de protección.
+        </p>
+      </div>
+      <div class="pillars-grid reveal">
+        <div class="pillar-card">
+          <div class="pillar-number">1</div>
+          <h3>Identidad y Acceso</h3>
+          <p>Solo las personas correctas acceden a los recursos correctos. Control estricto de credenciales y permisos.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">2</div>
+          <h3>Dispositivos Seguros</h3>
+          <p>Condiciones mínimas de seguridad para laptops y dispositivos móviles utilizados en operaciones.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">3</div>
+          <h3>Datos Protegidos</h3>
+          <p>Preservar la confidencialidad e integridad de toda la información operativa de la organización.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">4</div>
+          <h3>Respuesta a Incidentes</h3>
+          <p>Saber qué hacer y a quién reportar cuando se detecta una falla o comportamiento sospechoso.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Buenas Practicas ===== -->
+  <section id="practicas" class="alt-bg">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label label-blue">04 &mdash; Prácticas</span>
+        <h2 class="section-title">Buenas Prácticas por Rol</h2>
+        <p class="section-desc">
+          Cada rol dentro de la organización tiene responsabilidades específicas en materia de ciberseguridad. Conoce las tuyas.
+        </p>
+      </div>
+      <div class="practices-columns reveal">
+        <!-- Operarios y Supervisores -->
+        <div class="practice-group">
+          <div class="practice-header practice-header-navy">
+            <div class="practice-header-icon">&#128104;&#8205;&#128295;</div>
+            Operarios y Supervisores
+          </div>
+          <ul class="practice-list">
+            <li class="practice-item">
+              <div class="practice-bullet bullet-navy">&#128274;</div>
+              <div>
+                <strong>Contraseña Blindada</strong>
+                <p>Mínimo 10 caracteres con letras, números y símbolos. Ejemplo: &iexcl;MiPerroTiene3Huesos!</p>
+              </div>
+            </li>
+            <li class="practice-item">
+              <div class="practice-bullet bullet-navy">&#128581;</div>
+              <div>
+                <strong>No Compartir Acceso</strong>
+                <p>Tu acceso es personal e intransferible. Compartirlo constituye una falta grave.</p>
+              </div>
+            </li>
+            <li class="practice-item">
+              <div class="practice-bullet bullet-navy">&#128682;</div>
+              <div>
+                <strong>Cierre de Sesión</strong>
+                <p>Siempre cierra tu sesión al finalizar, especialmente en tablets de campo.</p>
+              </div>
+            </li>
+            <li class="practice-item">
+              <div class="practice-bullet bullet-navy">&#128246;</div>
+              <div>
+                <strong>Uso de Datos Móviles</strong>
+                <p>No uses Wi-Fi de centros comerciales o redes públicas. Utiliza datos móviles o VPN.</p>
+              </div>
+            </li>
+            <li class="practice-item">
+              <div class="practice-bullet bullet-navy">&#128247;</div>
+              <div>
+                <strong>Cero Capturas</strong>
+                <p>Prohibido enviar fotos con datos de personal por WhatsApp personal u otras apps no autorizadas.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Administradores e IT -->
+        <div class="practice-group">
+          <div class="practice-header practice-header-blue">
+            <div class="practice-header-icon">&#128187;</div>
+            Administradores e IT
+          </div>
+          <ul class="practice-list">
+            <li class="practice-item">
+              <div class="practice-bullet bullet-blue">&#128100;</div>
+              <div>
+                <strong>Gestión de Bajas</strong>
+                <p>Desactivar cuentas de ex-empleados de forma inmediata tras su desvinculación.</p>
+              </div>
+            </li>
+            <li class="practice-item">
+              <div class="practice-bullet bullet-blue">&#128737;</div>
+              <div>
+                <strong>Privilegios Mínimos</strong>
+                <p>Otorgar acceso únicamente a lo estrictamente necesario para cada rol.</p>
+              </div>
+            </li>
+            <li class="practice-item">
+              <div class="practice-bullet bullet-blue">&#128272;</div>
+              <div>
+                <strong>Secretos Seguros</strong>
+                <p>Las claves de base de datos nunca deben compartirse en chats ni incluirse en el código fuente.</p>
+              </div>
+            </li>
+            <li class="practice-item">
+              <div class="practice-bullet bullet-blue">&#128190;</div>
+              <div>
+                <strong>Backups Verificados</strong>
+                <p>Probar la restauración periódicamente. Un backup sin verificar no es un respaldo confiable.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contrasenas ===== -->
+  <section id="contrasenas">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label label-navy">05 &mdash; Contraseñas</span>
+        <h2 class="section-title">Política de Contraseñas</h2>
+        <p class="section-desc">
+          Estándar GSS para la gestión de contraseñas seguras. Estas normas aplican para todos los usuarios de la plataforma.
+        </p>
+      </div>
+      <div class="password-grid reveal">
+        <div class="password-card">
+          <div class="password-icon">&#128207;</div>
+          <h3>Longitud</h3>
+          <p>Mínimo <strong>10 caracteres</strong> para todas las cuentas del sistema.</p>
+        </div>
+        <div class="password-card">
+          <div class="password-icon">&#128288;</div>
+          <h3>Complejidad</h3>
+          <p>Combinar <strong>mayúsculas, minúsculas, números y símbolos</strong> obligatoriamente.</p>
+        </div>
+        <div class="password-card">
+          <div class="password-icon">&#128260;</div>
+          <h3>Rotación</h3>
+          <p>Cambiar la contraseña cada <strong>90 días</strong> de manera obligatoria.</p>
+        </div>
+        <div class="password-card">
+          <div class="password-icon">&#128683;</div>
+          <h3>Sin Repeticiones</h3>
+          <p><strong>No repetir</strong> las últimas 5 contraseñas utilizadas previamente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Incidentes ===== -->
+  <section id="incidentes" class="alt-bg">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label label-red">06 &mdash; Incidentes</span>
+        <h2 class="section-title">Protocolo de Reporte de Incidentes</h2>
+        <p class="section-desc">
+          Si detectas algo sospechoso, sigue estos pasos de inmediato. Tu reacción rápida puede prevenir un incidente mayor.
+        </p>
+      </div>
+      <div class="incident-steps reveal">
+        <div class="incident-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Reporta Inmediatamente</h3>
+            <p>Comunica la situación al Administrador del sistema o al canal oficial de IT. No esperes, cada minuto cuenta.</p>
+          </div>
+        </div>
+        <div class="incident-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Cambia tu Contraseña</h3>
+            <p>Modifica tu contraseña de acceso de inmediato como medida preventiva, aún si no estás seguro del alcance del incidente.</p>
+          </div>
+        </div>
+        <div class="incident-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>No Investigues por tu Cuenta</h3>
+            <p>Deja que el equipo de IT se encargue de la investigación. Actuar por cuenta propia puede agravar la situación o destruir evidencia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <img src="logo.png" alt="GSS Facility Services" class="footer-logo">
+    <p><strong>GSS Facility Services</strong> &mdash; Campaña de Ciberseguridad 2026</p>
+    <p>&laquo; Nuestra seguridad la construimos todos &raquo;</p>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+
+    // Close menu on link click
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY + 120;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        if (scrollY >= top && scrollY < top + height) {
+          navAnchors.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    });
+
+    // Reveal animations
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
